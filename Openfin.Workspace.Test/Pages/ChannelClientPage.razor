@@ -1,0 +1,41 @@
+﻿@page "/"
+@page "/client"
+@inject IJSRuntime JS
+
+<div class="container my-3">
+    <div class="d-flex flex-column">
+        <div>
+            Name = @CompanyName
+        </div>
+        <div>
+            <input id="input-company-name" @bind="InputCompanyName" @bind:event="oninput" @onkeyup="Change" placeholder="Company name" />
+        </div>
+    </div>
+</div>
+
+@code {
+    public string CompanyName { get; set; }
+    public string InputCompanyName { get; set; }
+
+    protected ChannelClient Channel { get; set; }
+    protected CompanyTopic CompanyTopic { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Channel = await ChannelClient.Create(JS);
+
+            CompanyTopic = await CompanyTopic.Create(Channel);
+            CompanyTopic.Updated += (e, p) => { CompanyName = p.Name; StateHasChanged(); };
+
+            CompanyName = (await CompanyTopic.Get()).Name;
+            StateHasChanged();
+        }
+    }
+
+    public async Task Change()
+    {
+        await CompanyTopic.Update(new CompanyPayload { Name = InputCompanyName });
+    }
+}

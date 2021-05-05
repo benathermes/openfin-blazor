@@ -1,0 +1,8 @@
+{
+  "url": "http://localhost:5000/interop",
+  "interop": {
+    "contextDeclaration": [
+      "organization"
+    ]
+  }
+}

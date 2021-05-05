@@ -1,0 +1,44 @@
+﻿@page "/interop"
+@inject IJSRuntime JS
+
+@using System.Text.Json 
+
+<div class="container my-3">
+    <div class="d-flex flex-column">
+        <div>
+            Name = @CompanyName
+        </div>
+        <div>
+            <input id="input-company-name" @bind="InputCompanyName" @bind:event="oninput" @onkeyup="Change" placeholder="Company name" />
+        </div>
+    </div>
+</div>
+
+@code {
+    public string CompanyName { get; set; }
+    public string InputCompanyName { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("blazorInterop.Interop.init");
+
+            StateHasChanged();
+        }
+    }
+
+    public async Task Change()
+    {
+        var payload = JsonSerializer.Serialize(
+            new CompanyInteropPayload
+            {
+                Type = "organization",
+                Id = new CompanyPayload { Name = InputCompanyName }
+            }, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+
+
+        await JS.InvokeVoidAsync("blazorInterop.Interop.setContext", payload);
+    }
+}
+

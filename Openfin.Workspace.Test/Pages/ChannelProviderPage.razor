@@ -1,0 +1,19 @@
+﻿@page "/provider"
+
+<h3>Hidden Provider</h3>
+
+@code {
+    [Inject]
+    protected IJSRuntime JS { get; set; }
+    protected ChannelProvider Provider { get; set; }
+    protected CompanyProvider CompanySource { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Provider = await ChannelProvider.Create(JS);
+            CompanySource = await CompanyProvider.Create(Provider);
+        }
+    }
+}

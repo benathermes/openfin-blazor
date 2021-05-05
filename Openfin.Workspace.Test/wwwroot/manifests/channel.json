@@ -1,0 +1,109 @@
+{
+  "platform": {
+    "uuid": "openfin.base.test",
+    "applicationIcon": "http://localhost:5000/favicon.ico",
+    "autoShow": false,
+    "fdc3Api": false,
+    "defaultWindowOptions": {
+      "url": "http://localhost:5000/platform-window.html",
+      "cornerRounding": {
+        "height": 10,
+        "width": 10
+      },
+      "contextMenu": true
+    }
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "autoShow": true,
+        "defaultWidth": 800,
+        "defaultHeight": 600,
+        "defaultLeft": 10,
+        "defaultTop": 320,
+        "showTaskbarIcon": true,
+        "contextMenu": true,
+        "name": "window.view",
+        "layout": {
+          "settings": {
+            "hasHeaders": true,
+            "showPopoutIcon": true,
+            "showCloseIcon": true,
+            "showMaximiseIcon": true,
+            "popoutWholeStack": false
+          },
+          "content": [
+            {
+              "type": "stack",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "name": "View1",
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:5000/client"
+                  }
+                },
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "name": "View2",
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:5000/client"
+                  }
+                },
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "name": "View3",
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:5000/client"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "autoShow": false,
+        "defaultWidth": 800,
+        "defaultHeight": 600,
+        "showTaskbarIcon": true,
+        "contextMenu": true,
+        "name": "window.search",
+        "layout": {
+          "content": [
+            {
+              "type": "stack",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "name": "Search",
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:5000/provider"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "runtime": {
+    "arguments": "--v=1 --inspect --security-realm=investment-portal --enable-mesh",
+    "version": "stable"
+  },
+  "shortcut": {
+    "company": "Some Company",
+    "description": "OpenFin.Workspace.Test",
+    "icon": "http://localhost:5000/favicon.ico",
+    "name": "OpenFin.Workspace.Test"
+  }
+}

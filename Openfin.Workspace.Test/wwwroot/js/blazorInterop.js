@@ -66,12 +66,17 @@ blazorInterop.Channels.ChannelProvider.publish = async (provider, action, payloa
 *************************************************/
 blazorInterop.Interop.setContext = async (payload) => {
     if (blazorInterop.inOpenfin()) {
-        await fin.me.interop.setContext(payload);
+        if (typeof payload === "string") {
+            payload = JSON.parse(payload);
+        }
+        console.log("Setting context: " + JSON.stringify(payload));
+        fin.me.interop.setContext(payload);
     }
 };
 blazorInterop.Interop.addContextHandler = async (callback, callbackMethod) => {
     if (blazorInterop.inOpenfin()) {
-        await fin.me.interop.addContextHandler((payload) => {
+        console.log("Applying addContextHandler");
+        fin.me.interop.addContextHandler((payload) => {
             const dotnetHelper = callback;
             const method = callbackMethod;
             //await dotnetHelper.invokeMethodAsync(method, payload);
@@ -80,7 +85,8 @@ blazorInterop.Interop.addContextHandler = async (callback, callbackMethod) => {
 };
 blazorInterop.Interop.init = async () => {
     if (blazorInterop.inOpenfin()) {
-        await fin.me.interop.addContextHandler((payload) => {
+        console.log("Applying init");
+        fin.me.interop.addContextHandler((payload) => {
             // Callback handler never called
             let x = payload;
             let y = 0;

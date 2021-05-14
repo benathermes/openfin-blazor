@@ -1,7 +1,7 @@
 ﻿@page "/interop"
 @inject IJSRuntime JS
 
-@using System.Text.Json 
+@using System.Text.Json
 
 <div class="container my-3">
     <div class="d-flex flex-column">
@@ -22,7 +22,9 @@
     {
         if (firstRender)
         {
-            await JS.InvokeVoidAsync("blazorInterop.Interop.init");
+            DotNetObjectReference<InteropPage> CallbackObject = DotNetObjectReference.Create(this);
+
+            await JS.InvokeVoidAsync("blazorInterop.Interop.addContextHandler", CallbackObject, nameof(UpdateCallback));
 
             StateHasChanged();
         }
@@ -39,6 +41,13 @@
 
 
         await JS.InvokeVoidAsync("blazorInterop.Interop.setContext", payload);
+    }
+
+    [JSInvokable]
+    public async Task UpdateCallback(JsonElement payload)
+    {
+        CompanyName = payload.GetProperty("id").GetProperty("name").GetString();
+        StateHasChanged();
     }
 }
 

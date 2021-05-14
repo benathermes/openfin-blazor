@@ -76,10 +76,10 @@ blazorInterop.Interop.setContext = async (payload) => {
 blazorInterop.Interop.addContextHandler = async (callback, callbackMethod) => {
     if (blazorInterop.inOpenfin()) {
         console.log("Applying addContextHandler");
-        fin.me.interop.addContextHandler((payload) => {
+        fin.me.interop.addContextHandler(async (payload) => {
             const dotnetHelper = callback;
             const method = callbackMethod;
-            //await dotnetHelper.invokeMethodAsync(method, payload);
+            await dotnetHelper.invokeMethodAsync(method, payload);
         });
     }
 };

@@ -5,11 +5,11 @@
 
 <div class="container my-3">
     <div class="d-flex flex-column">
-        <div>
-            Name = @CompanyName
-        </div>
-        <div>
+        <div class="mx-auto">
             <input id="input-company-name" @bind="InputCompanyName" @bind:event="oninput" @onkeyup="Change" placeholder="Company name" />
+        </div>
+        <div class="mx-auto">
+            <div style="font-size: 20vw">@CompanyName</div>
         </div>
     </div>
 </div>
